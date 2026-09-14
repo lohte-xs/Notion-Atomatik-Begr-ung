@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <style>
+    :root { color-scheme: light dark; }
+    body {
+      margin: 0;
+      font: 600 18px/1.4 system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    }
+    .box {
+      padding: 14px 16px;
+      border: 1px solid rgba(127,127,127,.25);
+      border-radius: 10px;
+      background: rgba(127,127,127,.08);
+      display: inline-block;
+    }
+    .sub { font-weight: 500; opacity: .75; font-size: 13px; margin-top: 4px; }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <div id="greet">Hallo!</div>
+    <div class="sub" id="datetime"></div>
+  </div>
+
+  <script>
+    const name = "lohte"; // optional: leer lassen "" wenn du keinen Namen willst
+
+    function greetingByHour(h) {
+      if (h >= 5 && h < 11) return "Guten Morgen, Lohte :)";
+      if (h >= 11 && h < 17) return "Guten Tag, Lohte :)";
+      if (h >= 17 && h < 22) return "Guten Abend, Lohte :)";
+      return "Gute Nacht, Lohte :)";
+    }
+
+    function tick() {
+      const now = new Date();
+      const h = now.getHours();
+      
+      // Begrüßung setzen
+      const greet = greetingByHour(h) + (name ? ", " + name : "") + "!";
+      document.getElementById("greet").textContent = greet;
+
+      // Datum und Uhrzeit formatieren (z.B. "Montag, 14. September — 22:45 Uhr")
+      const dateString = now.toLocaleDateString("de-DE", { weekday: "long", day: "numeric", month: "long" });
+      const timeString = now.toLocaleTimeString("de-DE", { hour: "2-digit", minute: "2-digit" });
+      
+      document.getElementById("datetime").textContent = dateString + " — " + timeString + " Uhr";
+    }
+
+    tick();
+    setInterval(tick, 30 * 1000); // aktualisiert alle 30 Sekunden
+  </script>
+</body>
+</html>
